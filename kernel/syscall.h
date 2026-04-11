@@ -21,3 +21,7 @@
 #define SYS_link   19
 #define SYS_mkdir  20
 #define SYS_close  21
+// new system call number
+#define SYS_signal 23
+#define SYS_sigreturn  24
+#define SYS_sleep      25

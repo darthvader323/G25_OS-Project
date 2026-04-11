@@ -43,3 +43,6 @@ entry("sbrk");
 entry("pause");
 entry("uptime");
 entry("getyear");#This is a Perl script that creates the assembly bridge.
+entry("signal");
+entry("sigreturn");
+entry("sleep");

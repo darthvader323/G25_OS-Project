@@ -104,4 +104,12 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+
+     // --- SIGNAL SUPPORT ---
+void (*signal_handlers[32])(int);   // handlers for signals 0-31
+int  pending_signals;               // bitmask of pending signals
+struct trapframe signal_trapframe;  // saved trapframe for sigreturn
+int  in_signal_handler;              // 1 if currently in handler
+
 };

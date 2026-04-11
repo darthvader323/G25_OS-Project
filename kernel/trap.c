@@ -34,6 +34,29 @@ trapinithart(void)
 // called from, and returns to, trampoline.S
 // return value is user satp for trampoline.S to switch to.
 //
+// Deliver any pending signals to the current process
+void
+deliver_signals(void)
+{
+  struct proc *p = myproc();
+  if(p->in_signal_handler)
+    return;
+  for(int sig = 0; sig < 32; sig++){
+    if(p->pending_signals & (1 << sig)){
+      if(p->signal_handlers[sig] != 0){
+        p->pending_signals &= ~(1 << sig);
+        p->signal_trapframe = *p->trapframe;
+        p->in_signal_handler = 1;
+        p->trapframe->a0 = sig;
+        p->trapframe->epc = (uint64)p->signal_handlers[sig];
+        break;
+      } else {
+        p->pending_signals &= ~(1 << sig);
+        p->killed = 1;
+      }
+    }
+  }
+}
 uint64
 usertrap(void)
 {
@@ -83,6 +106,8 @@ usertrap(void)
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
     yield();
+// --- SIGNAL DELIVERY ---
+  deliver_signals();
 
   prepare_return();
 

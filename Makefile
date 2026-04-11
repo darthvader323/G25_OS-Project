@@ -147,6 +147,7 @@ UPROGS=\
 	$U/_dorphan\
 	$U/_test_proc\
 	$U/_final_project\
+        $U/_signaltest\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
