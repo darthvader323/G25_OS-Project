@@ -1,4 +1,4 @@
-***********************************************************INTRODUCTION**********************************************************
+***********************************************************INTRODUCTION***********************************************************
 
 This project focuses on developing a set of simplified UNIX-like utilities in C, along with a custom-built command-line shell. The objective is to understand how common UNIX commands such as file handling, directory listing, searching, and process execution work internally by implementing lightweight versions from scratch. Instead of using standard commands, each utility is implemented with a custom prefix (e.g., custom_ls, custom_cat) to ensure originality and avoid conflicts with existing system tools.
 
@@ -17,7 +17,7 @@ Riyan:  custom_ls
 
 In addition to their assigned utilities, all members contribute to updating the Makefile and README, ensuring consistency across the project. Each member also documents their implementation independently, highlighting their understanding of system calls and file handling in C.
 
-********************************************************OBJECTIVE********************************************************
+********************************************************OBJECTIVE*********************************************************
 
 The project aims to:
 
