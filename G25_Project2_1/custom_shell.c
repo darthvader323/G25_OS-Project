@@ -2,6 +2,8 @@
  * custom_shell.c
  * A simplified UNIX-like shell that supports built-in commands
  * and external custom utilities.
+ * Author: Adyant Kar
+ * Admission no.: 22JE0067
  */
 
 #include <stdio.h>
