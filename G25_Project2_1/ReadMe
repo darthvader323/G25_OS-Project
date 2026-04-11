@@ -1,0 +1,6 @@
+Introduction
+
+This project focuses on developing a set of simplified UNIX-like utilities in C, along with a custom-built command-line shell. The objective is to understand how common UNIX commands such as file handling, directory listing, searching, and process execution work internally by implementing lightweight versions from scratch. Instead of using standard commands, each utility is implemented with a custom prefix (e.g., custom_ls, custom_cat) to ensure originality and avoid conflicts with existing system tools.
+
+A key component of the project is the custom shell, which acts as the interface between the user and the implemented utilities. The shell reads user commands, parses them, and executes the corresponding programs using system calls like fork() and exec(). This provides hands-on experience with process creation and command execution in a UNIX-like environment.
+
