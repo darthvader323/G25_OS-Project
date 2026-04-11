@@ -17,7 +17,7 @@ Riyan:  custom_ls
 
 In addition to their assigned utilities, all members contribute to updating the Makefile and README, ensuring consistency across the project. Each member also documents their implementation independently, highlighting their understanding of system calls and file handling in C.
 
-********************************************************OBJECTIVE*********************************************************
+********************************************************OBJECTIVE********************************************************
 
 The project aims to:
 
@@ -34,7 +34,7 @@ The project aims to:
 
 
 
-*************************************************************CUSTOM SHELL************************************************************
+*************************************************************CUSTOM SHELL*************************************************************
 
 DONE BY: Adyant Kar (22JE0067)
 
