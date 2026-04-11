@@ -107,3 +107,9 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+//This tells the kernel: When someone asks for the year, give them the number 2026.
+uint64
+sys_getyear(void)
+{
+  return 2026;
+}

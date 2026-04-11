@@ -300,8 +300,10 @@ kfork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+ pid = np->pid; // np is the new child process 
+  // ADD THIS LINE
+  printf("\n[Kernel] Process Created: Parent PID %d -> Child PID %d\n", p->pid, pid);
   release(&np->lock);
-
   return pid;
 }
 

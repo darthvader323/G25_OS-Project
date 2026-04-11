@@ -80,6 +80,7 @@ argstr(int n, char *buf, int max)
 }
 
 // Prototypes for the functions that handle system calls.
+extern uint64 sys_getyear(void); //Prototype for the system call handler function.
 extern uint64 sys_fork(void);
 extern uint64 sys_exit(void);
 extern uint64 sys_wait(void);
@@ -105,6 +106,7 @@ extern uint64 sys_close(void);
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
 static uint64 (*syscalls[])(void) = {
+[SYS_getyear]  sys_getyear, //Map the system call number to the system call handler function.
 [SYS_fork]    sys_fork,
 [SYS_exit]    sys_exit,
 [SYS_wait]    sys_wait,
