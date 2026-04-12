@@ -9,10 +9,15 @@ A key component of the project is the custom shell, which acts as the interface 
 To ensure efficient development and equal contribution, the project has been divided among six team members. Each member is responsible for implementing specific utilities and preparing their own documentation, including code explanation and execution screenshots.
 
 Adyant: custom_shell (main shell + command execution
+
 Nayan:  custom_cat
+
 Sahil:  custom_grep
+
 Shadab: custom_cp, custom_mv
+
 Prabhu: custom_rm, custom_wc
+
 Riyan:  custom_ls
 
 In addition to their assigned utilities, all members contribute to updating the Makefile and README, ensuring consistency across the project. Each member also documents their implementation independently, highlighting their understanding of system calls and file handling in C.
