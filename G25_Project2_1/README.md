@@ -145,7 +145,7 @@ The prompt is formatted as `custom_shell:<cwd>$` with ANSI colours (green for th
 
 ************************************************************CUSTOM CAT************************************************************
 
-DONE BY: Nayan Kumar Choudhary (23J30636)
+DONE BY: Nayan Kumar Choudhary (23JE0636)
 
 A lightweight implementation of the Unix `cat` utility written from scratch in C, built as part of a group OS assignment. This utility is executed through the custom shell developed by the team.
 
