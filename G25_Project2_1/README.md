@@ -249,7 +249,7 @@ If no file arguments are provided after flag parsing, `custom_cat` automatically
 ********************************************
 # CUSTOM GREP
 
-**DONE BY:** Sahil Ranjan(23JE0844)
+**DONE BY:** Sahil Ranjan (23JE0844)
 
 A lightweight implementation of the Unix `grep` utility written in C. It searches for a given pattern in a file and prints matching lines, with optional case-insensitive support.
 
@@ -267,17 +267,34 @@ A lightweight implementation of the Unix `grep` utility written in C. It searche
 ```bash
 ./custom_grep <pattern> <filename>
 ./custom_grep -i <pattern> <filename>
-💻 Using with Custom Shell
+```
+
+---
+
+## 💻 Using with Custom Shell
+```bash
 ./custom_shell
 custom_grep <pattern> <filename>
 custom_grep -i <pattern> <filename>
-📖 Examples
+```
+
+---
+
+## 📖 Examples
+```bash
 custom_grep hello file.txt
 custom_grep -i hello file.txt
-🛠️ Implementation Details
-Reads file using fgets() line by line
-Uses strstr() for pattern matching
-Implements manual lowercase conversion for case-insensitive search
-Handles file errors (file not found, permission denied) using perror()
-📂 File
-custom_grep.c — Complete implementation
+```
+
+---
+
+## 🛠️ Implementation Details
+- Reads file using `fgets()` line by line  
+- Uses `strstr()` for pattern matching  
+- Implements manual lowercase conversion for case-insensitive search  
+- Handles file errors (file not found, permission denied) using `perror()`  
+
+---
+
+## 📂 File
+- `custom_grep.c` — Complete implementation  
