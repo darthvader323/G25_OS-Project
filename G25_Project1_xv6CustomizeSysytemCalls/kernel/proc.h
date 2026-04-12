@@ -81,6 +81,10 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+struct semaphore {
+  int value;
+  struct spinlock lock;
+};
 // Per-process state
 struct proc {
   struct spinlock lock;
@@ -111,5 +115,4 @@ void (*signal_handlers[32])(int);   // handlers for signals 0-31
 int  pending_signals;               // bitmask of pending signals
 struct trapframe signal_trapframe;  // saved trapframe for sigreturn
 int  in_signal_handler;              // 1 if currently in handler
-
 };

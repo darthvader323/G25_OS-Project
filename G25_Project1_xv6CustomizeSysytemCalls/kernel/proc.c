@@ -29,6 +29,10 @@ struct spinlock wait_lock;
 // Allocate a page for each process's kernel stack.
 // Map it high in memory, followed by an invalid
 // guard page.
+
+
+struct semaphore global_sem;
+
 void
 proc_mapstacks(pagetable_t kpgtbl)
 {
@@ -48,6 +52,8 @@ void
 procinit(void)
 {
   struct proc *p;
+  initlock(&global_sem.lock, "semaphore");
+  global_sem.value = 1;
   
   initlock(&pid_lock, "nextpid");
   initlock(&wait_lock, "wait_lock");
@@ -124,6 +130,8 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+
+
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){

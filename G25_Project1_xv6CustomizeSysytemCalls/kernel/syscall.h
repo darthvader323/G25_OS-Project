@@ -25,3 +25,6 @@
 #define SYS_signal 23
 #define SYS_sigreturn  24
 #define SYS_sleep      25
+#define SYS_sem_init     26
+#define SYS_sem_wait     27
+#define SYS_sem_post     28

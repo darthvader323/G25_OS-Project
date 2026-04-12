@@ -6,7 +6,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "vm.h"
-
+extern struct semaphore global_sem;
 uint64
 sys_exit(void)
 {
@@ -141,6 +141,7 @@ sys_sigreturn(void)
 uint64
 sys_sleep(void)
 {
+  
   int n;
   uint64 ticks0;
   argint(0, &n);
@@ -154,5 +155,45 @@ sys_sleep(void)
     sleep(&ticks, &tickslock);
   }
   release(&tickslock);
+  return 0;
+}
+
+
+uint64
+sys_sem_init(void) {
+  int val;
+  argint(0, &val);
+
+  acquire(&global_sem.lock);
+  global_sem.value = val;
+  release(&global_sem.lock);
+
+  return 0;
+}
+
+
+uint64
+sys_sem_wait(void) {
+  acquire(&global_sem.lock);
+
+  while(global_sem.value <= 0){
+    sleep(&global_sem, &global_sem.lock);
+  }
+
+  global_sem.value--;
+
+  release(&global_sem.lock);
+  return 0;
+}
+
+
+uint64
+sys_sem_post(void) {
+  acquire(&global_sem.lock);
+
+  global_sem.value++;
+  wakeup(&global_sem);
+
+  release(&global_sem.lock);
   return 0;
 }

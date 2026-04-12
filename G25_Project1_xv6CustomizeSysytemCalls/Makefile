@@ -148,6 +148,7 @@ UPROGS=\
 	$U/_test_proc\
 	$U/_final_project\
         $U/_signaltest\
+		$U/_semtest\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

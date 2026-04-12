@@ -52,3 +52,8 @@ void printf(const char*, ...) __attribute__ ((format (printf, 1, 2)));
 void* malloc(uint);
 void free(void*);
 int getyear(void);
+
+
+int sem_init(int);
+int sem_wait(void);
+int sem_post(void);
