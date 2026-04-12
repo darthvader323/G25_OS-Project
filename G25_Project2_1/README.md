@@ -9,10 +9,15 @@ A key component of the project is the custom shell, which acts as the interface 
 To ensure efficient development and equal contribution, the project has been divided among six team members. Each member is responsible for implementing specific utilities and preparing their own documentation, including code explanation and execution screenshots.
 
 Adyant: custom_shell (main shell + command execution
+
 Nayan:  custom_cat
+
 Sahil:  custom_grep
+
 Shadab: custom_cp, custom_mv
+
 Prabhu: custom_rm, custom_wc
+
 Riyan:  custom_ls
 
 In addition to their assigned utilities, all members contribute to updating the Makefile and README, ensuring consistency across the project. Each member also documents their implementation independently, highlighting their understanding of system calls and file handling in C.
@@ -140,6 +145,156 @@ The prompt is formatted as `custom_shell:<cwd>$` with ANSI colours (green for th
 
 ************************************************************CUSTOM CAT************************************************************
 
+DONE BY: Nayan Kumar Choudhary (23JE0636)
 
+A lightweight implementation of the Unix `cat` utility written from scratch in C, built as part of a group OS assignment. This utility is executed through the custom shell developed by the team.
 
+---
 
+## What It Does
+
+`custom_cat` is a file display utility that:
+- Reads and displays the contents of one or more files to standard output
+- Numbers each output line when the `-n` flag is provided
+- Concatenates multiple files and prints them sequentially
+- Falls back to reading from **standard input** if no file is provided
+- Handles missing or unreadable files gracefully with a descriptive error message
+
+ ---
+
+ ## Supported Flag
+
+ | Flag | Description |
+|------|-------------|
+| `-n` | Prefix each output line with its line number |
+
+---
+
+## How to Build
+
+Requirements: GCC, Linux or WSL (Windows Subsystem for Linux)
+
+```bash
+# Build only custom_cat
+gcc -Wall -g -o custom_cat custom_cat.c
+
+# Or build everything with the team's Makefile
+make
+```
+## How to Run
+
+```bash
+./custom_cat file.txt
+```
+
+Or inside the custom shell:
+```bash
+./custom_shell
+custom_cat file.txt
+```
+
+---
+
+## Usage Examples
+```bash
+# Display a file
+custom_cat file.txt
+
+# Display with line numbers
+custom_cat -n file.txt
+
+# Concatenate two files
+custom_cat file1.txt file2.txt
+
+# Read from stdin
+echo "hello" | custom_cat
+
+# Error handling for missing file
+custom_cat fakefile.txt
+```
+---
+## Implementation Details
+
+### Input Handling
+The utility reads input **character by character** using `fgetc()`, which gives precise control over line boundary detection. This differs from the common `fgets()` approach and allows accurate line numbering even for edge cases.
+
+### Modular Design
+The implementation is split into three focused functions:
+
+| Function | Description |
+|----------|-------------|
+| `show_contents()` | Reads from a file pointer char by char, prints content, handles line numbering using an `at_line_start` flag |
+| `open_and_display()` | Safely opens a file by name, calls `show_contents()`, handles file open errors using `perror()` |
+| `parse_flags()` | Scans command line arguments for supported flags and returns the index where file arguments begin |
+
+### Error Handling
+If a file cannot be opened, the utility prints a descriptive error message using both `fprintf(stderr)` and `perror()` for OS-level detail, then continues processing any remaining files instead of exiting immediately. The final exit status reflects whether any errors occurred.
+
+### Stdin Fallback
+If no file arguments are provided after flag parsing, `custom_cat` automatically reads from standard input, matching standard Unix `cat` behaviour.
+
+---
+## File
+
+| File | Description |
+|------|-------------|
+| `custom_cat.c` | Complete custom_cat implementation — single self-contained file |
+
+---
+## Notes
+- All logic is implemented from scratch in C with no external libraries
+- Integrates seamlessly with `custom_shell` since the shell uses `execvp()` to resolve binaries from the same directory
+- Tested on Ubuntu (Linux / WSL)
+********************************************
+********************************************
+# CUSTOM GREP
+
+**DONE BY:** Sahil Ranjan (23JE0844)
+
+A lightweight implementation of the Unix `grep` utility written in C. It searches for a given pattern in a file and prints matching lines, with optional case-insensitive support.
+
+---
+
+## 📌 What It Does
+- Searches for a pattern in a file line by line  
+- Prints matching lines with their line numbers  
+- Supports case-insensitive search using `-i` flag  
+- Uses simple string matching (`strstr`) for efficiency  
+
+---
+
+## ⚙️ Usage
+```bash
+./custom_grep <pattern> <filename>
+./custom_grep -i <pattern> <filename>
+```
+
+---
+
+## 💻 Using with Custom Shell
+```bash
+./custom_shell
+custom_grep <pattern> <filename>
+custom_grep -i <pattern> <filename>
+```
+
+---
+
+## 📖 Examples
+```bash
+custom_grep hello file.txt
+custom_grep -i hello file.txt
+```
+
+---
+
+## 🛠️ Implementation Details
+- Reads file using `fgets()` line by line  
+- Uses `strstr()` for pattern matching  
+- Implements manual lowercase conversion for case-insensitive search  
+- Handles file errors (file not found, permission denied) using `perror()`  
+
+---
+
+## 📂 File
+- `custom_grep.c` — Complete implementation  

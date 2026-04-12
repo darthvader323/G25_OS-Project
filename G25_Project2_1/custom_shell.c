@@ -2,51 +2,60 @@
  * custom_shell.c
  * A simplified UNIX-like shell that supports built-in commands
  * and external custom utilities.
- * Author: Adyant Kar
- * Admission no.: 22JE0067
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include <unistd.h>           //For fork(), execvp(), chdir(), getcwd()
+#include <sys/wait.h>         //for waitpid()
 #include <sys/types.h>
-#include <errno.h>
+#include <errno.h>            //for error handling
 
+
+/*           CONSTANTS                */
 #define MAX_INPUT   1024
 #define MAX_ARGS    64
 #define MAX_PATH    512
 
-/* ANSI color codes */
+
+
+
+/*              ANSI color codes(For better UI)            */
 #define COLOR_RESET  "\033[0m"
 #define COLOR_GREEN  "\033[1;32m"
 #define COLOR_CYAN   "\033[1;36m"
 #define COLOR_YELLOW "\033[1;33m"
 #define COLOR_RED    "\033[1;31m"
 
-/* ------------------------------------------------------------------ */
-/* Built-in: cd                                                        */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* BUILT-IN COMMAND: cd                                          */
+/* Changes current directory                                     */
+/* ============================================================= */
+
 static int builtin_cd(char **args)
 {
     if (args[1] == NULL) {
-        const char *home = getenv("HOME");
-        if (home == NULL) home = "/";
+        const char *home = getenv("HOME"); // Default to "/" if HOME is not set. get Home directory from environment variable
+        if (home == NULL) home = "/"; //fallback to root if HOME is not set
         if (chdir(home) != 0) {
-            perror("custom_shell: cd");
+            perror("custom_shell: cd"); // Print error message if chdir fails
         }
     } else {
         if (chdir(args[1]) != 0) {
             perror("custom_shell: cd");
         }
     }
-    return 1;
+    return 1; // Return 1 to indicate shell should continue running
 }
 
-/* ------------------------------------------------------------------ */
-/* Built-in: pwd                                                       */
-/* ------------------------------------------------------------------ */
+
+/* ============================================================= */
+/* BUILT-IN COMMAND: pwd                                         */
+/* Prints current working directory                              */
+/* ============================================================= */
 static int builtin_pwd(void)
 {
     char cwd[MAX_PATH];
@@ -58,16 +67,19 @@ static int builtin_pwd(void)
     return 1;
 }
 
-/* ------------------------------------------------------------------ */
-/* Built-in: help                                                      */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* BUILT-IN COMMAND: help                                        */
+/* Displays all supported commands                               */
+/* ============================================================= */
 static int builtin_help(void)
 {
     printf(COLOR_CYAN
-           "╔══════════════════════════════════════════════════╗\n"
-           "║           Custom UNIX-like Shell                ║\n"
-           "║         Supported Commands                      ║\n"
-           "╚══════════════════════════════════════════════════╝\n"
+           "══════════════════════════════════════════════════\n"
+           "         Custom UNIX-like Shell                \n"
+           "         Supported Commands                      \n"
+           "══════════════════════════════════════════════════\n"
            COLOR_RESET);
     printf(COLOR_YELLOW "Built-in commands:\n" COLOR_RESET);
     printf("  cd [dir]    - Change directory\n");
@@ -85,9 +97,14 @@ static int builtin_help(void)
     return 1;
 }
 
-/* ------------------------------------------------------------------ */
-/* Parse input into argv array; returns number of tokens              */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* INPUT PARSER                                                  */
+/* Splits user input into tokens (arguments)                     */
+/* Example: "ls -l file" → ["ls", "-l", "file"]                  */
+/* ============================================================= */
+
 static int parse_input(char *input, char **args)
 {
     int count = 0;
@@ -100,9 +117,17 @@ static int parse_input(char *input, char **args)
     return count;
 }
 
-/* ------------------------------------------------------------------ */
-/* Resolve utility path: look next to the shell binary, then in PATH  */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* UTILITY RESOLVER                                              */
+/* Finds path of custom utilities                                */
+/* Search order:                                                 */
+/* 1. Same directory as shell                                    */
+/* 2. Current working directory                                  */
+/* 3. System PATH                                                */
+/* ============================================================= */
+
 static int resolve_utility(const char *name, char *out, size_t out_sz)
 {
     /* 1. Same directory as the running process */
@@ -122,7 +147,7 @@ static int resolve_utility(const char *name, char *out, size_t out_sz)
     snprintf(out, out_sz, "./%s", name);
     if (access(out, X_OK) == 0) return 1;
 
-    /* 3. PATH */
+    /* 3. PATH variable */
     const char *path_env = getenv("PATH");
     if (path_env) {
         char path_copy[2048];
@@ -137,9 +162,12 @@ static int resolve_utility(const char *name, char *out, size_t out_sz)
     return 0;
 }
 
-/* ------------------------------------------------------------------ */
-/* Execute an external command                                         */
-/* ------------------------------------------------------------------ */
+
+/* ============================================================= */
+/* EXECUTE COMMAND                                               */
+/* Runs external commands using fork + exec                      */
+/* ============================================================= */
+
 static int execute(char **args)
 {
     /* Check if it's one of our custom utilities and resolve path */
@@ -180,9 +208,12 @@ static int execute(char **args)
     return 1;
 }
 
-/* ------------------------------------------------------------------ */
-/* Print prompt                                                        */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* PROMPT DISPLAY                                                */
+/* Shows: custom_shell:~/path$                                   */
+/* ============================================================= */
 static void print_prompt(void)
 {
     char cwd[MAX_PATH];
@@ -202,9 +233,12 @@ static void print_prompt(void)
     fflush(stdout);
 }
 
-/* ------------------------------------------------------------------ */
-/* Main loop                                                           */
-/* ------------------------------------------------------------------ */
+
+
+/* ============================================================= */
+/* MAIN FUNCTION                                                 */
+/* Main loop of the shell                                        */
+/* ============================================================= */
 int main(void)
 {
     char  input[MAX_INPUT];
