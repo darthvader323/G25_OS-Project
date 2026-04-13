@@ -9,17 +9,36 @@ int main() {
     exit(1);
   }
 
-  printf("Trying to acquire lock...\n");
+  int pid = fork();
 
-  lock_acquire(lock);
-  printf("Inside critical section\n");
+  if(pid == 0) {
+    // Child process
+    lock_acquire(lock);
+    printf("Child acquired lock\n");
 
-  for(int i = 0; i < 5; i++) {
-    printf("Working %d\n", i);
+    for(int i = 0; i < 5; i++) {
+      printf("Child working %d\n", i);
+    }
+
+    lock_release(lock);
+    printf("Child released lock\n");
+    exit(0);
+  } else {
+    // Parent process
+    sleep(10);
+
+    lock_acquire(lock);
+    printf("Parent acquired lock\n");
+
+    for(int i = 0; i < 5; i++) {
+      printf("Parent working %d\n", i);
+    }
+
+    lock_release(lock);
+    printf("Parent released lock\n");
+
+    wait(0);
   }
-
-  lock_release(lock);
-  printf("Lock released\n");
 
   exit(0);
 }
