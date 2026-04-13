@@ -28,3 +28,7 @@
 #define SYS_sem_init     26
 #define SYS_sem_wait     27
 #define SYS_sem_post     28
+//Riyaan - Locks
+#define SYS_lock_create 29
+#define SYS_lock_acquire 30
+#define SYS_lock_release 31

@@ -197,3 +197,41 @@ sys_sem_post(void) {
   release(&global_sem.lock);
   return 0;
 }
+
+// Riyan - Lock System Calls
+
+uint64
+sys_lock_create(void) {
+  for(int i = 0; i < MAX_LOCKS; i++) {
+    if(lock_used[i] == 0) {
+      initlock(&userlocks[i], "ulock");
+      lock_used[i] = 1;
+      return i;
+    }
+  }
+  return -1;
+}
+
+uint64
+sys_lock_acquire(void) {
+  int id;
+  argint(0, &id);
+
+  if(id < 0 || id >= MAX_LOCKS || lock_used[id] == 0)
+    return -1;
+
+  acquire(&userlocks[id]);
+  return 0;
+}
+
+uint64
+sys_lock_release(void) {
+  int id;
+  argint(0, &id);
+
+  if(id < 0 || id >= MAX_LOCKS || lock_used[id] == 0)
+    return -1;
+
+  release(&userlocks[id]);
+  return 0;
+}

@@ -109,6 +109,10 @@ extern uint64 sys_sleep(void);
 extern uint64 sys_sem_init(void);
 extern uint64 sys_sem_wait(void);
 extern uint64 sys_sem_post(void);
+// riyaan-Locks
+extern uint64 sys_lock_create(void);
+extern uint64 sys_lock_acquire(void);
+extern uint64 sys_lock_release(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -142,6 +146,10 @@ static uint64 (*syscalls[])(void) = {
 [SYS_sem_init]  sys_sem_init,
 [SYS_sem_wait]  sys_sem_wait,
 [SYS_sem_post]  sys_sem_post,
+//Riyaan-Locks
+[SYS_lock_create] sys_lock_create,
+[SYS_lock_acquire] sys_lock_acquire,
+[SYS_lock_release] sys_lock_release,
 };
 
 void
