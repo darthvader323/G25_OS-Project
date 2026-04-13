@@ -292,9 +292,79 @@ custom_grep -i hello file.txt
 - Reads file using `fgets()` line by line  
 - Uses `strstr()` for pattern matching  
 - Implements manual lowercase conversion for case-insensitive search  
-- Handles file errors (file not found, permission denied) using `perror()`  
+- Handles file errors (file not found, permission denied) using `perror()`
+
+
+
+## 📂 File
+- `custom_grep.c` — Complete implementation
+
+
+
+************************************************************CUSTOM RM************************************************************
+
+**DONE BY:** Prabhujit Singh (23JE0723)
+
+A lightweight implementation of the Unix `rm` utility written in C. This command is used to delete files from the system with proper error handling.
 
 ---
 
-## 📂 File
-- `custom_grep.c` — Complete implementation  
+## What It Does
+- Deletes one or more files from the filesystem  
+- Supports removal of multiple files in a single command  
+- Handles invalid or missing files gracefully  
+- Displays error messages for inaccessible files  
+
+---
+
+## Usage
+```bash
+./custom_rm <filename>
+./custom_rm <file1> <file2> ...
+
+./custom_shell
+custom_rm file.txt
+custom_rm file1.txt file2.txt
+# Remove a single file
+custom_rm file.txt
+
+# Remove multiple files
+custom_rm file1.txt file2.txt
+
+# Error case
+custom_rm fakefile.txt
+
+
+
+************************************************************CUSTOM WC************************************************************
+
+**DONE BY:** Prabhujit Singh (23JE0723)
+
+A lightweight implementation of the Unix `wc` (word count) utility written from scratch in C. It is used to count the number of lines, words, and characters in a file or standard input.
+
+---
+
+## What It Does
+`custom_wc` is a counting utility that:
+- Counts the number of **lines, words, and characters** in a file  
+- Supports processing of multiple files  
+- Reads from **standard input** if no file is provided  
+- Handles missing or unreadable files gracefully  
+
+---
+
+## Usage
+```bash
+./custom_wc <filename>
+./custom_wc <file1> <file2> ...
+./custom_shell
+custom_wc file.txt
+
+# Count lines, words, and characters in a file
+custom_wc file.txt
+
+# Count multiple files
+custom_wc file1.txt file2.txt
+
+# Read from standard input
+echo "Hello World" | custom_wc
