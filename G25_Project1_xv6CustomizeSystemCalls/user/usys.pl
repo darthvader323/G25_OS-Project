@@ -51,3 +51,7 @@ entry("sleep");
 entry("sem_init");
 entry("sem_wait");
 entry("sem_post");
+# Riyan - Locks
+entry("lock_create");
+entry("lock_acquire");
+entry("lock_release");

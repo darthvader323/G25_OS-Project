@@ -116,3 +116,8 @@ int  pending_signals;               // bitmask of pending signals
 struct trapframe signal_trapframe;  // saved trapframe for sigreturn
 int  in_signal_handler;              // 1 if currently in handler
 };
+// Riyan - Locks (Global Declarations)
+#define MAX_LOCKS 10
+
+extern struct spinlock userlocks[MAX_LOCKS];
+extern int lock_used[MAX_LOCKS];

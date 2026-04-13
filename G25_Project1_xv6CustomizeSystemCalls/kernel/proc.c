@@ -5,6 +5,10 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
+#define MAX_LOCKS 10
+
+struct spinlock userlocks[MAX_LOCKS];
+int lock_used[MAX_LOCKS];
 
 struct cpu cpus[NCPU];
 

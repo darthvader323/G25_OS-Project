@@ -57,3 +57,7 @@ int getyear(void);
 int sem_init(int);
 int sem_wait(void);
 int sem_post(void);
+// Riyaan- Locks
+int lock_create(void);
+int lock_acquire(int);
+int lock_release(int);
