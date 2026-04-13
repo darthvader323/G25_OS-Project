@@ -61,3 +61,6 @@ int sem_post(void);
 int lock_create(void);
 int lock_acquire(int);
 int lock_release(int);
+
+int send(int pid, char *msg);
+int recv(void);

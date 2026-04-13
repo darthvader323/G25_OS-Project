@@ -115,6 +115,9 @@ void (*signal_handlers[32])(int);   // handlers for signals 0-31
 int  pending_signals;               // bitmask of pending signals
 struct trapframe signal_trapframe;  // saved trapframe for sigreturn
 int  in_signal_handler;              // 1 if currently in handler
+// --- IPC SUPPORT ---
+char message[64];
+int has_message;
 };
 // Riyan - Locks (Global Declarations)
 #define MAX_LOCKS 10

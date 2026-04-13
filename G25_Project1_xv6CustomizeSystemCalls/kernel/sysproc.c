@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "vm.h"
 extern struct semaphore global_sem;
+extern struct proc proc[NPROC];
 uint64
 sys_exit(void)
 {
@@ -157,6 +158,54 @@ sys_sleep(void)
   release(&tickslock);
   return 0;
 }
+// ================= IPC SYSTEM CALLS =================
+
+
+uint64
+sys_send(void)
+{
+  int pid;
+  char msg[64];
+
+  argint(0, &pid);
+  argstr(1, msg, sizeof(msg));
+
+  struct proc *p;
+
+  for(p = proc; p < &proc[NPROC]; p++){
+    if(p->pid == pid){
+      safestrcpy(p->message, msg, sizeof(p->message));
+      p->has_message = 1;
+      return 0;
+    }
+  }
+
+  return -1;
+}
+
+
+uint64
+sys_recv(void)
+{
+  struct proc *p;
+  int found = 0;
+
+  for(p = proc; p < &proc[NPROC]; p++){
+    if(p->has_message){
+      printf("Received from PID %d: %s\n", p->pid, p->message);
+      p->has_message = 0;
+      found = 1;
+    }
+  }
+
+  if(!found){
+    printf("No message\n");
+    return -1;
+  }
+
+  return 0;
+}
+
 
 
 uint64

@@ -150,6 +150,8 @@ UPROGS=\
         $U/_signaltest\
 	$U/_semtest\
 	$U/_locktest\
+	    $U/_send\
+        $U/_recv
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

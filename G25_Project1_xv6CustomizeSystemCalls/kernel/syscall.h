@@ -32,3 +32,5 @@
 #define SYS_lock_create 29
 #define SYS_lock_acquire 30
 #define SYS_lock_release 31
+#define SYS_send    32
+#define SYS_recv    33

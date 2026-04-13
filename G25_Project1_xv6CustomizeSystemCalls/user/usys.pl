@@ -55,3 +55,5 @@ entry("sem_post");
 entry("lock_create");
 entry("lock_acquire");
 entry("lock_release");
+entry("send");
+entry("recv");
